@@ -14,7 +14,7 @@ import { TarefaService } from '../../services/tarefa.service';
 export class TarefaComponent {
   tarefaForm: FormGroup = new FormGroup({})
   tarefas: Tarefa[] = []
-  tarefaIdEdicao: string | null = null
+  tarefaIdEdicao: number | null = null
   darkMode = true
 
   constructor(private tarefaService: TarefaService, private formBuilder: FormBuilder){
@@ -23,7 +23,7 @@ export class TarefaComponent {
       data: ['', Validators.required],
       hora: ['', Validators.required],
       responsavel: ['', Validators.required],
-      concluida: ['', Validators.required],
+      concluida: [false],
     })
     this.darkMode = localStorage.getItem('theme') === 'dark';
     this.applyTheme();
@@ -36,6 +36,43 @@ export class TarefaComponent {
   ngOnInit(): void{
     this.listar()
   }
+
+  editar(tarefa: Tarefa): void {
+  this.tarefaIdEdicao = tarefa.id;
+
+  this.tarefaForm.patchValue({
+    descricao: tarefa.descricao,
+    data: tarefa.data,
+    hora: tarefa.hora,
+    responsavel: tarefa.responsavel,
+    concluida: tarefa.concluida,
+  });
+}
+
+salvar() {
+    if (this.tarefaForm.valid) {
+      const tarefa = this.tarefaForm.value as Tarefa;
+
+      if (this.tarefaIdEdicao) {
+    // PUT
+      this.tarefaService.atualizar(this.tarefaIdEdicao, tarefa).subscribe(() => {
+      this.listar(); // atualiza a lista
+    });
+  } else {
+        // POST
+         this.tarefaService.adicionar(tarefa).subscribe(() => {
+      this.listar();
+      this.tarefaForm.reset();
+    });
+      }
+
+    } else {
+      alert('Por favor preencher os campos obrigatórios')
+    }
+    this.tarefaForm.reset // Limpar o form após o preenchimento
+    this.listar();
+  }
+
 
    
 
