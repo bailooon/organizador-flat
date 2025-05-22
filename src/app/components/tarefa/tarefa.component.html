@@ -1,31 +1,16 @@
 <h2>Lista de tarefas</h2>
 
-<table border="1">
-    <thead>
-        <tr>
-            <th>Descrição</th>
-            <th>Data</th>
-            <th>Hora</th>
-            <th>Responsável</th>
-            <th>Concluída</th>
-        </tr>
-    </thead>
-    <tbody>
-        @for(tarefa of tarefas; track $index){
-            <tr>
-                <td>{{ tarefa.descricao }}</td>
-                <td>{{ tarefa.data }}</td>
-                <td>{{ tarefa.hora }}</td>
-                <td>{{ tarefa.responsavel }}</td>
-                <td>{{ tarefa.concluida ? '✅' : '⏳' }}</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<button (click)="toggleTheme()">
+  {{ darkMode ? '☀️ Modo Claro' : '🌙 Modo Escuro' }}
+</button>
 
-<!-- tarefas/components/tarefa-list.component.html -->
-<ul>
-  <li *ngFor="let tarefa of tarefas">
-    {{ tarefa.descricao }} - {{ tarefa.data }} - {{ tarefa.concluida ? '✅' : '⏳' }}
-  </li>
-</ul>
+<div class="container">
+    @for(tarefa of tarefas; track $index){
+        <div class="tarefa">
+            <h3>Tarefa a ser realizada: {{ tarefa.descricao }}</h3>
+            <p>Fazer dia {{ tarefa.data | date:'dd/MM/yyyy' }} às {{ tarefa.hora }}</p>
+            <p>Deverá ser feita por {{ tarefa.responsavel}}</p>
+            <p>Concluída? {{ tarefa.concluida ? '✅' : '❌' }}</p>
+        </div>
+    }
+</div>

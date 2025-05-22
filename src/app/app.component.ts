@@ -11,4 +11,5 @@ import { TarefaComponent } from './components/tarefa/tarefa.component';
 })
 export class AppComponent {
   title = 'organizador-flat';
+ 
 }

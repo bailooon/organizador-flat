@@ -15,6 +15,7 @@ export class TarefaComponent {
   tarefaForm: FormGroup = new FormGroup({})
   tarefas: Tarefa[] = []
   tarefaIdEdicao: string | null = null
+  darkMode = true
 
   constructor(private tarefaService: TarefaService, private formBuilder: FormBuilder){
     this.tarefaForm = formBuilder.group({
@@ -24,6 +25,8 @@ export class TarefaComponent {
       responsavel: ['', Validators.required],
       concluida: ['', Validators.required],
     })
+    this.darkMode = localStorage.getItem('theme') === 'dark';
+    this.applyTheme();
   }
 
   listar(): void {
@@ -32,6 +35,19 @@ export class TarefaComponent {
 
   ngOnInit(): void{
     this.listar()
+  }
+
+   
+
+  toggleTheme(): void {
+    this.darkMode = !this.darkMode;
+    localStorage.setItem('theme', this.darkMode ? 'dark' : 'light');
+    this.applyTheme();
+  }
+
+  applyTheme(): void {
+    document.body.classList.remove('light-mode', 'dark-mode');
+    document.body.classList.add(this.darkMode ? 'dark-mode' : 'light-mode');
   }
 
 
