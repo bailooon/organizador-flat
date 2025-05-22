@@ -56,7 +56,9 @@ salvar() {
       if (this.tarefaIdEdicao) {
     // PUT
       this.tarefaService.atualizar(this.tarefaIdEdicao, tarefa).subscribe(() => {
-      this.listar(); // atualiza a lista
+      this.listar(); 
+      this.tarefaForm.reset();
+      this.tarefaIdEdicao = null;
     });
   } else {
         // POST
@@ -69,8 +71,14 @@ salvar() {
     } else {
       alert('Por favor preencher os campos obrigatórios')
     }
-    this.tarefaForm.reset // Limpar o form após o preenchimento
+    this.tarefaForm.reset() // Limpar o form após o preenchimento
     this.listar();
+  }
+
+  remover(id: number): void{
+    this.tarefaService.remover(id).subscribe(() => {
+      this.listar()
+    })
   }
 
 

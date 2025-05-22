@@ -41,7 +41,12 @@
         <h3>Tarefa a ser realizada: {{ tarefa.descricao }}</h3>
         <p>Fazer dia {{ tarefa.data | date:'dd/MM/yyyy' }} às {{ tarefa.hora }}</p>
         <p>Deverá ser feita por {{ tarefa.responsavel}}</p>
-        <p>Concluída? {{ tarefa.concluida ? '✅' : '❌' }}</p>
+        <p>Concluída? {{ tarefa.concluida ? '✅' : '❌' }}</p> 
+        <div class="alinhar">
+            <button class="acao" (click)="remover(tarefa.id)">Remover 🗑</button>
+            <button class="acao" (click)="editar(tarefa)">Editar 🖊</button>
+        </div>
+
     </div>
     }
 </div>

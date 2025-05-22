@@ -1,34 +1,55 @@
-html, body {
-  height: 100%;
-  margin: 0;
-  background-color: #121212;
-  color: #f0f0f0;
+
+
+.tarefa {
+  border: 2px;
+  border-style: solid;
+  border-color: rgb(39, 148, 54);
+  border-radius: 8px;
+  margin: 10px;
+  padding: 10px;
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
-.tarefa{
-    border: 2px;
-    border-style: solid;
-    border-color: rgb(39, 148, 54);
-    border-radius: 8px;
-    margin: 10px;
-    padding: 10px;
-
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    transform-style: preserve-3d;
-    will-change: transform;
-    
-    
+.container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
 }
 
-.container{
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: row;
+.acao {
+  border: none;
+  border-radius: 8px;
+  background-color: #444;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  margin: 3px;
 }
 
-.tarefa:hover{
-    transform: translateZ(10px) scale(1.03);
-    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
-    
+.acao:active {
+  transform: translateY(1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.acao:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(39, 148, 54);
+}
+
+
+.alinhar {
+  display: flex;
+  align-items: center;
+}
+
+.tarefa:hover {
+  transform: translateZ(10px) scale(1.03);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
 }
