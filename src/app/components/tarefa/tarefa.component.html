@@ -1,50 +1,62 @@
-<h2>Lista de tarefas</h2>
-
-<button (click)="toggleTheme()">
+<button class="acao" (click)="toggleTheme()">
     {{ darkMode ? '☀️ Modo Claro' : '🌙 Modo Escuro' }}
 </button>
+<header>
+    <div>
+        <h1>Lista de tarefas</h1>
+    </div>
+</header>
 
-<form [formGroup]="tarefaForm" (ngSubmit)="salvar()">
-    <p>
-        <label>Descrição: </label>
-        <input type="text" formControlName="descricao" />
-    </p>
-    <p>
-        <label>Data: </label>
-        <input type="date" formControlName="data" />
-    </p>
-    <p>
-        <label>Hora: </label>
-        <input type="time" formControlName="hora" />
-    </p>
-    <p>
-        <label>responsavel: </label>
-        <input type="text" formControlName="responsavel" />
-    </p>
-    <p>
-        <label>Concluida: </label>
-        <input type="checkbox" formControlName="concluida" />
-        {{ tarefaForm.get('concluida')?.value ? '✅' : '❌' }}
-    </p>
-    <p>
-        <button type="submit">
-            {{
-            tarefaIdEdicao ? "Atualizar" : "Cadastrar"
-            }}
-        </button>
-    </p>
-</form>
+
+<div>
+    <button (click)="alternarFormulario()" class="acao">
+      {{ mostrarFormulario ? 'Fechar formulário' : 'Adicionar tarefa' }}
+    </button>
+    @if(mostrarFormulario){
+    <form [formGroup]="tarefaForm" (ngSubmit)="salvar()">
+        <p>
+            <label>Descrição: </label>
+            <input type="text" formControlName="descricao" />
+        </p>
+        <p>
+            <label>Data: </label>
+            <input type="date" formControlName="data" />
+        </p>
+        <p>
+            <label>Hora: </label>
+            <input type="time" formControlName="hora" />
+        </p>
+        <p>
+            <label>Responsável: </label>
+            <input type="text" formControlName="responsavel" />
+        </p>
+        <p>
+            <button type="submit" class="acao">
+                {{
+                tarefaIdEdicao ? "Atualizar" : "Cadastrar"
+                }}
+            </button>
+        </p>
+    </form>
+    }
+</div>
+
+
 
 <div class="container">
     @for(tarefa of tarefas; track $index){
     <div class="tarefa">
-        <h3>Tarefa a ser realizada: {{ tarefa.descricao }}</h3>
+        <h3> {{ tarefa.descricao }}</h3>
         <p>Fazer dia {{ tarefa.data | date:'dd/MM/yyyy' }} às {{ tarefa.hora }}</p>
-        <p>Deverá ser feita por {{ tarefa.responsavel}}</p>
-        <p>Concluída? {{ tarefa.concluida ? '✅' : '❌' }}</p> 
+        <p>Responsável: {{ tarefa.responsavel}}</p>
+        <p (click)="alternarStatusConcluida(tarefa)">Concluída? {{ tarefa.concluida ? '✅' : '❌' }}</p> 
         <div class="alinhar">
             <button class="acao" (click)="remover(tarefa.id)">Remover 🗑</button>
-            <button class="acao" (click)="editar(tarefa)">Editar 🖊</button>
+            @if(mostrarFormulario){
+                <button class="acao" (click)="editar(tarefa)">Editar 🖊</button>
+            }@else{
+                <button class="acao" (click)="editar(tarefa)" (click)="alternarFormulario()">Editar 🖊</button>
+            }
         </div>
 
     </div>

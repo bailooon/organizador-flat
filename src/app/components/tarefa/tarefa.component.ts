@@ -16,6 +16,7 @@ export class TarefaComponent {
   tarefas: Tarefa[] = []
   tarefaIdEdicao: number | null = null
   darkMode = true
+  mostrarFormulario = false
 
   constructor(private tarefaService: TarefaService, private formBuilder: FormBuilder){
     this.tarefaForm = formBuilder.group({
@@ -71,12 +72,24 @@ salvar() {
     } else {
       alert('Por favor preencher os campos obrigatórios')
     }
-    this.tarefaForm.reset() // Limpar o form após o preenchimento
     this.listar();
+    this.tarefaForm.reset() // Limpar o form após o preenchimento
   }
 
   remover(id: number): void{
     this.tarefaService.remover(id).subscribe(() => {
+      this.listar()
+    })
+  }
+
+  alternarFormulario(): void {
+    this.mostrarFormulario = !this.mostrarFormulario
+  }
+
+  alternarStatusConcluida(tarefa: Tarefa): void{
+    const tarefaAtualizada = { ...tarefa, concluida: !tarefa.concluida};
+
+    this.tarefaService.atualizar(tarefa.id, tarefaAtualizada).subscribe(() => {
       this.listar()
     })
   }
