@@ -5,7 +5,6 @@ body {
   background-color: #302f2f;
   color: #ffffff;
   transition: background-color 0.3s, color 0.3s;
-  padding: 10px;
 }
 
 /* Estilos para modo escuro */
